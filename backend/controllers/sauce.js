@@ -1,6 +1,7 @@
 const Sauce = require("../models/Sauce");
 
 exports.createSauce = (req, res, next) => {
+    
     delete req.body.userId;
     const sauce = new Sauce({
         ...req.body

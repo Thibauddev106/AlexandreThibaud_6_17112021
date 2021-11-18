@@ -11,8 +11,6 @@ mongoose.connect("mongodb+srv://alex:1230@cluster0.ltnwj.mongodb.net/test?retryW
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
-
-
 app.use((req, res, next) => {
   console.log(req)
     res.setHeader('Access-Control-Allow-Origin', '*');

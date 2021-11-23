@@ -41,7 +41,8 @@ exports.modifySauce = (req, res, next) => {
 exports.deleteSauce = (req, res, next) => {
     // on utilise l'ID que nous recevons comme paramètre pour accéder au sauce correspondant dans la base de données
     Sauce.findOne({ _id: req.params.id })
-        then(sauce => {
+        .then(sauce => {
+            console.log(sauce);
             // on utilise le fait de savoir que notre URL d'image contient un segment /images/ pour séparer le nom de fichier ;
             const filename = sauce.imageUrl.split("/images/")[1];
             // on utilise la fonction unlink du package fs pour supprimer ce fichier, 

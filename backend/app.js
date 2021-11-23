@@ -20,7 +20,7 @@ mongoose.connect("mongodb+srv://alex:1230@cluster0.ltnwj.mongodb.net/test?retryW
   
 //  middleware pour éviter les erreurs de securité CORS
 app.use((req, res, next) => {
-  console.log(req)
+  
     // on accède a l'API depuis n'importe quel origine
     res.setHeader('Access-Control-Allow-Origin', '*');
     // on ajoute ces headers aux requete envoyées vers notre API

@@ -21,28 +21,62 @@ exports.createSauce = (req, res, next) => {
 
 // fonction pour modifier une sauce
 exports.modifySauce = (req, res, next) => {
+    const sauceObject = JSON.parse(req.body.sauce);
+        if(req.file) {
+            sauceObject.imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+            Sauce.findOne({_id: req.params.id},{imageUrl: true},(err, sauce)=>{
+                if(err){
+                    console.log(err);
+                    return;
+                }
+                const filename = sauce.imageUrl.split("/images/")[1];
+                fs.unlink(`images/${filename}`, (err)=>{
+                    if(err){
+                        console.log(err.message);
+                    }
+                });
+            })
+        }
+        Sauce.updateOne({_id: req.params.id}, {...sauceObject, _id: req.params.id}, (err, data)=>{
+            if(err){
+                return res.status(500).json({
+                    status: 500,
+                    message: "Erreur",
+                    error: err
+                })
+            }
+            return res.status(200).json({
+                status: 200,
+                message: "Sauce modifié !"
+            })
+        })
+}
     // on crée un objet sauceObject qui regarde si req.file existe ou non
-    const sauceObject = req.file ?
-    {
+    /*const sauceObject = req.file ?
+    {   
         // S'il existe, on traite la nouvelle image
         ...JSON.parse(req.body.sauce),
         imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
         // s'il n'existe pas, on traite simplement l'objet entrant
+        
     } : { ...req.body };
+    
+    }*/
+    
     // on met à jour la sauce qui correspond à l'objet du premier argument
     // et on utilise le paramètre id passé dans la demande
     // pour le remplacer par la sauce passé comme second argument
-    Sauce.updateOne({_id: req.params.id}, { ...sauceObject, _id: req.params.id})
+    /*Sauce.updateOne({ _id: req.params.id}, { ...sauceObject, _id: req.params.id})
         .then(() => res.status(200).json({ message: "Sauce modifié !"}))
-        .catch(error => res.status(400).json({ error }));
-};
-
+        .catch(error => res.status(400).json({ error }));*/
+    
+    
+    
 // fonction pour supprimer une sauce
 exports.deleteSauce = (req, res, next) => {
     // on utilise l'ID que nous recevons comme paramètre pour accéder au sauce correspondant dans la base de données
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
-            console.log(sauce);
             // on utilise le fait de savoir que notre URL d'image contient un segment /images/ pour séparer le nom de fichier ;
             const filename = sauce.imageUrl.split("/images/")[1];
             // on utilise la fonction unlink du package fs pour supprimer ce fichier, 

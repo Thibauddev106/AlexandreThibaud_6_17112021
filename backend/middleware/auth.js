@@ -1,5 +1,6 @@
 // on importe le package jsonweb token
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 // on crée le middleware qui vérifie que l'utilisateur est authentifié
 module.exports = (req, res, next) => {
@@ -7,7 +8,7 @@ module.exports = (req, res, next) => {
         // on extrait le token de la requête  
         const token = req.headers.authorization.split(" ")[1];
         // on décode notre token
-        const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+        const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN);
         // on extrait l'ID utilisateur du token
         const userId = decodedToken.userId;
         // si la demande contient un ID utilisateur, nous le comparons à celui extrait du token

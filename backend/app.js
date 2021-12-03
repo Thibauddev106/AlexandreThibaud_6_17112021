@@ -9,11 +9,15 @@ const sauceRoutes = require("./routes/sauce");
 // on importe le routeur utilisateur
 const userRoutes = require("./routes/user");
 const app = express();
+require("dotenv").config();
 
 // connection à mongoDB Atlas
-mongoose.connect("mongodb+srv://alex:1230@cluster0.ltnwj.mongodb.net/test?retryWrites=true&w=majority",
+/*mongoose.connect("mongodb+srv://alex:1230@cluster0.ltnwj.mongodb.net/test?retryWrites=true&w=majority",
   { useNewUrlParser: true,
-    useUnifiedTopology: true })
+    useUnifiedTopology: true })*/
+mongoose.connect(process.env.SECRET_DB, 
+  { useNewUrlParser: true,
+  useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 

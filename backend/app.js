@@ -10,6 +10,7 @@ const sauceRoutes = require("./routes/sauce");
 const userRoutes = require("./routes/user");
 const app = express();
 require("dotenv").config();
+const helmet = require("helmet");
 
 // connection à mongoDB Atlas
 /*mongoose.connect("mongodb+srv://alex:1230@cluster0.ltnwj.mongodb.net/test?retryWrites=true&w=majority",
@@ -20,6 +21,9 @@ mongoose.connect(process.env.SECRET_DB,
   useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
+
+
+app.use(helmet());
 
   
 //  middleware pour éviter les erreurs de securité CORS

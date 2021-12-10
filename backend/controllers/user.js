@@ -24,6 +24,8 @@ exports.signup = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+
+
 // vérification si un utilisateur qui tente de se connecter dispose d'identifiant valide
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
@@ -36,6 +38,7 @@ exports.login = (req, res, next) => {
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     if (!valid) {
+                        
                         return res.status(401).json({ error: "Mot de passe incorrect !" });
                     }
                     // si tout est valide, on renvoie une réponse 200 contenant l'ID utilisateur et un token

@@ -12,20 +12,17 @@ const app = express();
 require("dotenv").config();
 const helmet = require("helmet");
 
+
 // connection à mongoDB Atlas
-/*mongoose.connect("mongodb+srv://alex:1230@cluster0.ltnwj.mongodb.net/test?retryWrites=true&w=majority",
+mongoose.connect(`mongodb+srv://${process.env.SECRET_ADMIN_DB}:${process.env.SECRET_PASSWORD_DB}@cluster0.ltnwj.mongodb.net/test?retryWrites=true&w=majority`,
   { useNewUrlParser: true,
-    useUnifiedTopology: true })*/
-mongoose.connect(process.env.SECRET_DB, 
-  { useNewUrlParser: true,
-  useUnifiedTopology: true })
+    useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 
 app.use(helmet());
 
-  
 //  middleware pour éviter les erreurs de securité CORS
 app.use((req, res, next) => {
   

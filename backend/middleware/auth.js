@@ -1,4 +1,4 @@
-// on importe le package jsonweb token
+// on importe le package jsonwebtoken
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 

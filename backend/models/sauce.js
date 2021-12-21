@@ -1,6 +1,7 @@
 // on importe le package mongoose
 const mongoose = require("mongoose");
 
+
 // on crée un schéma de données avec les champs souhaités pour chaque sauce
 const sauceSchema = mongoose.Schema({
     userId:{type: String, required: true},
@@ -15,6 +16,7 @@ const sauceSchema = mongoose.Schema({
     usersLiked: {type: [String]},
     usersDisliked: {type: [String]},
 });
+
 
 // on exporte le schéma pour le rendre disponible par express
 module.exports = mongoose.model("Sauce", sauceSchema);
